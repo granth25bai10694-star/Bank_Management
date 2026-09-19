@@ -1,13 +1,8 @@
-/**
- * Represents a single bank account.
- * This is a simple data class (POJO) that stores account details
- * and knows how to convert itself to/from a line of text so it can
- * be saved in a file.
- */
+
 public class Account {
     private int accountNumber;
     private String name;
-    private String pin;      // stored as String so leading zeros (e.g. "0042") are preserved
+    private String pin;      
     private double balance;
 
     public Account(int accountNumber, String name, String pin, double balance) {
@@ -17,7 +12,6 @@ public class Account {
         this.balance = balance;
     }
 
-    // ---------- Getters / Setters ----------
     public int getAccountNumber() {
         return accountNumber;
     }
@@ -38,17 +32,12 @@ public class Account {
         this.balance = balance;
     }
 
-    /**
-     * Converts this account into one CSV line so it can be written to accounts.txt
-     * Format: accountNumber,name,pin,balance
-     */
+
     public String toFileLine() {
         return accountNumber + "," + name + "," + pin + "," + balance;
     }
 
-    /**
-     * Rebuilds an Account object from one CSV line read from accounts.txt
-     */
+   
     public static Account fromFileLine(String line) {
         String[] parts = line.split(",");
         int accNo = Integer.parseInt(parts[0].trim());
