@@ -2,20 +2,13 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * BankService holds all the business logic of the bank:
- * creating accounts, deposits, withdrawals, transfers, statements, etc.
- * It also takes care of loading accounts from disk when the program starts
- * and saving them back to disk whenever something changes, so data is not
- * lost when the program is closed and reopened.
- */
+
 public class BankService {
 
     private static final String ACCOUNTS_FILE = "accounts.txt";
     private static final String TRANSACTIONS_FILE = "transactions.txt";
 
-    // All accounts are kept in memory (in a Map for fast lookup by account number)
-    // and mirrored on disk in ACCOUNTS_FILE.
+    
     private Map<Integer, Account> accounts = new LinkedHashMap<>();
     private int nextAccountNumber = 1001; // account numbers start from 1001
 
@@ -23,14 +16,12 @@ public class BankService {
         loadAccounts();
     }
 
-    // ---------------------------------------------------------------
-    // Persistence helpers
-    // ---------------------------------------------------------------
+  
 
     private void loadAccounts() {
         File file = new File(ACCOUNTS_FILE);
         if (!file.exists()) {
-            return; // first run, nothing to load yet
+            return; 
         }
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -47,7 +38,7 @@ public class BankService {
         }
     }
 
-    /** Rewrites the whole accounts file from the in-memory data. Called after every change. */
+   
     private void saveAccounts() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(ACCOUNTS_FILE))) {
             for (Account acc : accounts.values()) {
@@ -58,7 +49,7 @@ public class BankService {
         }
     }
 
-    /** Appends one line describing a transaction to transactions.txt (used for the mini statement). */
+    
     private void logTransaction(int accountNumber, String type, double amount, double balanceAfter) {
         String timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
         String line = accountNumber + "," + type + "," + String.format("%.2f", amount)
@@ -70,9 +61,7 @@ public class BankService {
         }
     }
 
-    // ---------------------------------------------------------------
-    // Core banking operations
-    // ---------------------------------------------------------------
+    
 
     public Account createAccount(String name, String pin, double initialDeposit) {
         int accNo = nextAccountNumber++;
@@ -89,7 +78,7 @@ public class BankService {
         return accounts.get(accountNumber);
     }
 
-    /** Returns the account only if the PIN matches too (used before any sensitive operation). */
+    
     public Account authenticate(int accountNumber, String pin) {
         Account acc = accounts.get(accountNumber);
         if (acc != null && acc.getPin().equals(pin)) {
@@ -136,7 +125,7 @@ public class BankService {
         return accounts.values();
     }
 
-    /** Returns the last few transaction lines for a given account (most recent first). */
+    
     public List<String> getMiniStatement(int accountNumber, int maxEntries) {
         List<String> matching = new ArrayList<>();
         File file = new File(TRANSACTIONS_FILE);
