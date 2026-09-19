@@ -1,5 +1,5 @@
 
-public class Account {
+public class Account{
     private int accountNumber;
     private String name;
     private String pin;      
