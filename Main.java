@@ -1,11 +1,6 @@
 import java.util.Scanner;
 
-/**
- * Entry point of the Bank Management System.
- * Shows a text menu in the console and calls into BankService to actually
- * perform the banking operations. All account data is saved to accounts.txt
- * and transactions.txt in the same folder, so it survives between runs.
- */
+
 public class Main {
 
     private static Scanner sc = new Scanner(System.in);
@@ -56,9 +51,6 @@ public class Main {
         System.out.println("-------------------------------------");
     }
 
-    // ---------------------------------------------------------------
-    // Menu actions
-    // ---------------------------------------------------------------
 
     private static void createAccount() {
         System.out.println("\n--- Create New Account ---");
@@ -160,7 +152,7 @@ public class Main {
         System.out.println("Type                        Amount        Balance After   Date/Time");
         for (String entry : entries) {
             String[] parts = entry.split(",");
-            // parts[0]=accNo, [1]=type, [2]=amount, [3]=balanceAfter, [4]=timestamp
+            
             System.out.printf("%-28s%-14s%-16s%s%n", parts[1], parts[2], parts[3], parts[4]);
         }
     }
@@ -193,11 +185,7 @@ public class Main {
         }
     }
 
-    // ---------------------------------------------------------------
-    // Helpers
-    // ---------------------------------------------------------------
-
-    /** Asks for account number + PIN and returns the matching account, or null if login fails. */
+   
     private static Account login() {
         int accNo = readInt("Enter your account number: ");
         String pin = readPin("Enter your PIN: ");
